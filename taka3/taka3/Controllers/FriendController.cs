@@ -24,12 +24,11 @@ namespace taka3.Controllers
         public ActionResult FollowUser(string userID)
         {
             string currUserId = User.Identity.GetUserId();
-            var fService = new FollowingService(); // kannski þarf að senda inn db
+            var fService = new FollowingService();
             fService.AddFollowingToUser(currUserId, userID);
-            //return View("FriendProfilePage", userID); //TODO: Fix return statement
-			//("FriendProfilePage", "Home")skilar alltaf villu
-			return RedirectToAction("FriendProfilePage", "Home", new { userId = userID });
 
+			//Redirectar á prófílinn og sendir id notandans með	-Védís
+			return RedirectToAction("FriendProfilePage", "Home", new { userId = userID });
         }
 
         // GET: friends/Details/5
