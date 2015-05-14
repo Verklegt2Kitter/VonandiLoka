@@ -1,0 +1,31 @@
+﻿@model taka3.Models.ProfilePageViewModel
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<h2>@Model.UserFirstName @Model.UserLastName</h2>
+
+<div>
+    @foreach (var post in Model.UserPosts)
+    {
+        <p>@post.DateAndTime</p>
+        
+        if(post.Image != null)
+        {
+            <img src="~/Content/images/@post.ImageName" />
+        }
+        
+        if (post.PostBody != null)
+        {
+            <p>@post.PostBody</p>
+        }
+        <br/>
+
+    }
+</div>
+
+
+<div>
+    @Html.Partial("_ToDoPartial")
+</div>

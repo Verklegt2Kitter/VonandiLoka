@@ -1,0 +1,27 @@
+﻿@model taka3.Models.ProfilePageViewModel
+
+@{
+    ViewBag.Title = "FriendProfilePage";
+}
+
+<h2>@Model.UserFirstName @Model.UserLastName</h2>
+
+@Html.Partial("_FollowButton", Model)
+
+<div>
+    @foreach (var post in Model.UserPosts)
+    {
+        <p>@post.DateAndTime</p>
+
+        if (post.Image != null)
+        {
+            <img src="~/Content/images/@post.ImageName" />
+        }
+
+        if (post.PostBody != null)
+        {
+            <p>@post.PostBody</p>
+        }
+        <br />
+    }
+</div>
