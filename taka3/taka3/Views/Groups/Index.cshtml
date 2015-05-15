@@ -1,4 +1,4 @@
-﻿@model IEnumerable<taka3.Models.Groupmodel>
+﻿@model IEnumerable<taka3.Models.GroupModel>
 
     @{
         ViewBag.Title = "Index";
@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.GroupName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserName)
+               
             </th>
             <th></th>
         </tr>
@@ -27,13 +27,8 @@
                 <td>
                     @Html.ActionLink(item.GroupName, "Details", new { id = item.GroupID })
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.GroupID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.GroupID })
-                </td>
+                
+               
             </tr>
         }
 

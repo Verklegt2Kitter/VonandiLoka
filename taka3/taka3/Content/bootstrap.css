@@ -221,7 +221,9 @@ textarea {
 .pull-left {
   float: left !important;
 }
+
 table {
+    
   border-collapse: collapse;
   border-spacing: 0;
 }
