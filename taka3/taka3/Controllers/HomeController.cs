@@ -162,17 +162,21 @@ namespace taka3.Controllers
 			ProfilePageViewModel model = new ProfilePageViewModel();
 			IdentityManager manager = new IdentityManager();
 			var post = new UserPostService();
-
 			var user = new UserService();
-			var userName = user.GetUserNameFromID(userid);
+		    var isOtherUserMyFriend = new FollowingService();
 
-			model.UserPosts = post.GetPostsByUserId(userid).ToList();
+			var myUserId = User.Identity.GetUserId(); // Nær í userid þess sem er innskráður	-Védís
+			var userName = user.GetUserNameFromID(userid); //Nær í username þess sem á prófílinn	-Védís
 
-			var userinfo = manager.GetUser(userName);
+			model.UserPosts = post.GetPostsByUserId(userid).ToList(); //Nær í pósta frá þeim sem á prófílinn	-Védís
 
-			model.UserFirstName = userinfo.FirstName;
-			model.UserLastName = userinfo.LastName;
-			model.userID = userinfo.Id;
+			var userinfo = manager.GetUser(userName);//Sá sem á prófílinn	-Védís
+
+			model.UserFirstName = userinfo.FirstName;//FirstName þess sem á prófílinn	-Védís
+			model.UserLastName = userinfo.LastName;//LastName þess sem á prófílinn	-Védís
+			model.userID = userinfo.Id;//UserID þess sem á prófílinn	-Védís
+		   //Kallar á fall í FollowingService sem athugar hvort innskráður notandi sé að fylgja hinum
+			model.AmIFollowing = isOtherUserMyFriend.IsUserMyFriend(userid, myUserId);
 
 			return View(model);
 		}

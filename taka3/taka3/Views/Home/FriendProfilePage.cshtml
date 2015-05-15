@@ -5,12 +5,20 @@
 }
 
 <h2>@Model.UserFirstName @Model.UserLastName</h2>
+@if (Model.AmIFollowing != true)
+{
+    @Html.Partial("_FollowButton", Model)
+}
+@if (Model.AmIFollowing == true)
+{
+    <h5>Þú ert að fylgja þessum notanda</h5>
+}
 
-@Html.Partial("_FollowButton", Model)
 
 <div>
     @foreach (var post in Model.UserPosts)
     {
+        <div class="lists"> </div>
         <p>@post.DateAndTime</p>
 
         if (post.Image != null)
@@ -22,6 +30,11 @@
         {
             <p>@post.PostBody</p>
         }
+        <div>
+            @Html.ActionLink("Sjá og sýna athugasemdir", "PostComments",
+            new { postid = post.ID })
+        </div>
+        
         <br />
     }
 </div>
