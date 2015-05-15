@@ -1,0 +1,14 @@
+﻿@model taka3.Models.GroupUser
+@{
+    ViewBag.Title = "AddGroupMember";
+}
+
+<h2>Bæta við hópmeðlim</h2>
+
+@foreach (var item in friendModel)
+    <tr>
+        <td>
+            @Html.ActionLink(item.Name, "Edit", new { id = item.ID })
+        </td>
+    </tr>
+}

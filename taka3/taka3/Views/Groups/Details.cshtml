@@ -1,5 +1,4 @@
 ﻿@model taka3.Models.GroupModel
-
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,6 +6,7 @@
 
 <h2>@Html.DisplayFor(model => model.GroupName)</h2>
 <!--Fanney, view fyrir hóp-->
+
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -16,15 +16,13 @@
         <dd>
             @Html.DisplayFor(model => model.UserName)
         </dd>
-        <dt>
-            Hópmeðlimir
-        </dt>
-        <dd>
-
-        </dd>
-
     </dl>
 </div>
+<div>
+    @Html.Partial("_AddPostGroup")
+</div>
+@Html.ActionLink("Bæta í hóp", "AddGroupMember", new { })
+
 <p>
     @Html.ActionLink("Breyta", "Edit", new { id = Model.GroupID }) |
     @Html.ActionLink("Til baka", "Index")
