@@ -8,66 +8,95 @@ using System.Web.Security;
 
 namespace taka3.Services
 {
-    public class FollowingService
-    {
-        ApplicationDbContext m_db = new ApplicationDbContext();
+	public class FollowingService
+	{
+		ApplicationDbContext m_db = new ApplicationDbContext();
 
-        //fanney/steindór fengu hjálp og til varð follow stuff
-        public List<FriendModel> GetAllFriendList()
-        {
-            return m_db.FriendModel.ToList();
-        }
+		//fanney/steindór fengu hjálp og til varð follow stuff
+		public List<FriendModel> GetAllFriendList()
+		{
+			return m_db.FriendModel.ToList();
+		}
 
-        public void AddFollowingToUser(string thisUser, string userToFollow)
-        {
+		public void AddFollowingToUser(string thisUser, string userToFollow)
+		{
 
-            var userService = new UserService(m_db);
+			var userService = new UserService(m_db);
 
-            var followMe = new FriendModel();
+			var followMe = new FriendModel();
 
-            followMe.User = userService.GetThisUserById(thisUser); // Application user.
-            followMe.FollowingUserId = userToFollow;
-            followMe.isFollowing = true;
+			followMe.User = userService.GetThisUserById(thisUser); // Application user.
+			followMe.FollowingUserId = userToFollow;
+			followMe.isFollowing = true;
 
-            m_db.FriendModel.Add(followMe);
-            m_db.SaveChanges();
-        }
-        public List<FriendModel> MyFollowingList(string userId)
-        {
-            var userService = new UserService();
+			m_db.FriendModel.Add(followMe);
+			m_db.SaveChanges();
+		}
 
-            var me = userService.GetThisUserById(userId);
-            var returnMe = (from l in GetAllFriendList()
-                            where l.User == me
-                            select l).ToList();
-            return returnMe;
-        }
-        public FriendModel GetUserFriendInfoById(int id)
-        {
-            var list = GetAllFriendList();
-            var thisUser = (from u in list
-                            where u.Id == id
-                            select u).SingleOrDefault();
+		//Skilar followers listanum mínum	-???
+		public List<FriendModel> MyFollowingList(string userId)
+		{
+			var userService = new UserService();
 
-            return thisUser;
-        }
-        public void UnFollwUser(string userId, string stopFollowId)
-        {
-            var list = MyFollowingList(userId);
-            var stopFollow = (from f in list
-                              where f.FollowingUserId == stopFollowId
-                              select f).SingleOrDefault();
+			var me = userService.GetThisUserById(userId);
+			var returnMe = (from l in GetAllFriendList()
+							where l.User == me
+							select l).ToList();
+			return returnMe;
+		}
 
-            var unfollow = GetUserFriendInfoById(stopFollow.Id);
+		//
+		public FriendModel GetUserFriendInfoById(int id)
+		{
+			var list = GetAllFriendList();
+			var thisUser = (from u in list
+							where u.Id == id
+							select u).SingleOrDefault();
 
-            m_db.FriendModel.Remove(unfollow);
+			return thisUser;
+		}
+		public void UnFollwUser(string userId, string stopFollowId)
+		{
+			var list = MyFollowingList(userId);
+			var stopFollow = (from f in list
+							  where f.FollowingUserId == stopFollowId
+							  select f).SingleOrDefault();
 
-            m_db.SaveChanges();
-        }
+			var unfollow = GetUserFriendInfoById(stopFollow.Id);
 
-        internal object GetUserFriendInfoById(string userid)
-        {
-            throw new NotImplementedException();
-        }
-    }
+			m_db.FriendModel.Remove(unfollow);
+
+			m_db.SaveChanges();
+		}
+
+		internal object GetUserFriendInfoById(string userid)
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool IsUserMyFriend(string otheruserid, string myuserid)
+		{
+			bool result = true;
+			var user = new FriendModel();
+			var friendlist = new FollowingService();
+			var userService = new UserService();
+
+			var me = userService.GetThisUserById(myuserid);
+
+			foreach (var item in friendlist.GetAllFriendList())
+			{
+				if((item.FollowingUserId == otheruserid) && (item.User.Id == me.Id))
+				{
+					result = true;
+					break;
+				}
+				else
+				{
+					result = false;
+				}
+			}
+
+			return result;
+		}
+	}
 }

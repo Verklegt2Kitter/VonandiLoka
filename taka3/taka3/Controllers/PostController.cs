@@ -10,7 +10,6 @@ using Microsoft.AspNet.Identity;
 namespace taka3.Controllers
 {
 	//Controller sem tekur á móti póstum frá notendum (myndum/statusum)	-Védís
-	//TODO BÆTA VIÐ AÐ HÆGT SÉ AÐ ADDA GROUPID	-Védís
     public class PostController : Controller
     {
 		UserPostService userService = new UserPostService();

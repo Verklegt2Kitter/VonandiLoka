@@ -1,0 +1,31 @@
+﻿@model taka3.Models.CommentViewModel
+
+@if(Model != null )
+        {
+            if (Model.Image != null)
+            {
+                <img src="~/Content/images/@Model.ImageName" />
+            }
+              
+            if (Model.PostBody != null)
+            {
+                <p>@Model.PostBody</p>
+            }
+            
+            using(Html.BeginForm("CommentUpload", "Comment", FormMethod.Post, new { enctype = "application/x-www-form-urlencoded"}))
+            {
+                 <input type="hidden" name="commentid" value="" />
+                 <input type="hidden" name="postid" id="postid" value="@Model.PostID" />
+                 <label for="comment">Tjáðu þig</label>
+                 <input type="text" name="commentBody" id="commentBody" />
+                 <input type="submit" value="PostComment" class="submit" />
+            }
+            
+            foreach (var item in Model.Comments)
+            {
+                @Html.ActionLink(@item.CommenterFirstName + " " + @item.CommenterLastName, "FriendProfilePage",
+                new { userid = item.UserID })
+                <p>@item.DateAndTime</p>
+                <p>@item.CommentBody</p>
+            }
+        }

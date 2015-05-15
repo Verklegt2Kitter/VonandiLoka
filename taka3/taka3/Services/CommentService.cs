@@ -18,5 +18,22 @@ namespace taka3.Services
 				m_db.SaveChanges();
 			}
 		}
+
+		public IEnumerable<Comment> GetAllCommentsForPost(int postid)
+		{
+			var result = (from item in m_db.Comments
+						  where item.PostID == postid
+						  orderby item.DateAndTime descending
+						  select item).ToList().Take(10);
+			return result;
+		}
+
+		public string GetCommenterID(int commentid)
+		{
+			var result = (from item in m_db.Comments
+						  where item.ID == commentid
+						  select item.UserID).SingleOrDefault();
+			return result;
+		}
 	}
 }

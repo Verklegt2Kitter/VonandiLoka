@@ -12,5 +12,6 @@ namespace taka3.Models
 		public string UserFirstName { get; set; }
 		public string UserLastName { get; set; }
 		public int PostID { get; set; }
+		public bool AmIFollowing { get; set; }
 	}
 }

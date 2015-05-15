@@ -20,6 +20,11 @@
         {
             <p>@post.PostBody</p>
         }
+        
+        <div>
+            @Html.ActionLink("Sjá og sýna athugasemdir", "PostComments",
+            new { postid = post.ID })
+        </div>
         <br/>
 
     }

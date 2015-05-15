@@ -78,7 +78,5 @@ namespace taka3.Services
 						 select item.UserName).SingleOrDefault();
 			return result;
 		}
-
-
     }
 }
