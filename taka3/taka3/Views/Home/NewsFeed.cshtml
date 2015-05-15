@@ -31,7 +31,8 @@
 
                 <!--Birta comment sem fylgja mynd-->
             <div>
-                @{Html.RenderPartial("_AddCommentPartial", new { postid = item.ID });}
+                @Html.ActionLink("Sjá og sýna athugasemdir", "PostComments",
+                new { postid = item.ID })
             </div>
             
             <br />

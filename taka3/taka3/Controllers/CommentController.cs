@@ -13,27 +13,22 @@ namespace taka3.Controllers
 	//Fall sem tekur inn comment við pósta frá notanda.	-Védís
     public class CommentController : Controller
     {
-		CommentService userService = new CommentService();
+		CommentService commentService = new CommentService();
 
 	    public ActionResult CommentUpload(string commentBody, int? commentid, int postid)
 	    {
 		    Comment model = new Comment();
-			
-			
 		    
  		    model.DateAndTime = DateTime.Now;
 		    model.CommentBody = commentBody;
 		    model.UserID = User.Identity.GetUserId();
-		    if (postid != null)
-			{
-				model.PostID = postid;
-			}
+			model.PostID = postid;
 			
 
- 	 	    userService.AddComment(model);
+ 	 	    commentService.AddComment(model);
 
-		    //Redirectar aftur á newsfeedið
-            return RedirectToAction("NewsFeed", "Home");
+		    //Redirectar aftur á PostComments síðuna	-Védís
+			return RedirectToAction("PostComments", "Home", new { postid = model.PostID});
 	    }
 	}
 }
