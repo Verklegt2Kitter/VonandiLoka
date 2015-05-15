@@ -8,10 +8,17 @@ namespace taka3.Services
 {
     public class GroupService
     {
+        
         ApplicationDbContext m_db = new ApplicationDbContext();
         public void AddGroup(GroupModel m)
         {
             m_db.Group.Add(m);
+            m_db.SaveChanges();
+        }
+
+        public void AddGroupUser(GroupUser newUser)
+        {
+            m_db.GroupUser.Add(newUser);
             m_db.SaveChanges();
         }
 

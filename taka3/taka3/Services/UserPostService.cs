@@ -12,7 +12,7 @@ namespace taka3.Services
     {
 		ApplicationDbContext m_db = new ApplicationDbContext();
 
-		// Sjabbalabbadingdong?
+		/* Sjabbalabbadingdong?
         public List<ApplicationUser> GetAllUsers()
         {
             return m_db.Users.ToList();
@@ -26,7 +26,7 @@ namespace taka3.Services
 							select u).SingleOrDefault();
 			return thisUser;
 
-		}
+		}*/
 
 		//Skilar username útfrá userid sem er sent inn	-Védís
 		public string GetUserNameById(string userId)
