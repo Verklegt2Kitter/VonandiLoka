@@ -11,8 +11,8 @@
             {
                 <p>@Model.PostBody</p>
             }
-            
-            using(Html.BeginForm("CommentUpload", "Comment", FormMethod.Post, new { enctype = "application/x-www-form-urlencoded"}))
+            <div class="lists"> </div>
+            using (Html.BeginForm("CommentUpload", "Comment", FormMethod.Post, new { enctype = "application/x-www-form-urlencoded" }))
             {
                  <input type="hidden" name="commentid" value="" />
                  <input type="hidden" name="postid" id="postid" value="@Model.PostID" />
@@ -20,9 +20,10 @@
                  <input type="text" name="commentBody" id="commentBody" />
                  <input type="submit" value="PostComment" class="submit" />
             }
-            
+
             foreach (var item in Model.Comments)
             {
+                <div class="lists"> </div>
                 @Html.ActionLink(@item.CommenterFirstName + " " + @item.CommenterLastName, "FriendProfilePage",
                 new { userid = item.UserID })
                 <p>@item.DateAndTime</p>

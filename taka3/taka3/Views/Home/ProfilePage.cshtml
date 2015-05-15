@@ -9,7 +9,8 @@
 <div>
     @foreach (var post in Model.UserPosts)
     {
-        <p>@post.DateAndTime</p>
+        <div class="lists"> </div>
+        <p class="time">@post.DateAndTime</p>
         
         if(post.Image != null)
         {

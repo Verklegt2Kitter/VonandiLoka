@@ -11,13 +11,14 @@
 }
 @if (Model.AmIFollowing == true)
 {
-    <h3>Þú ert að fylgja þessum notanda</h3>
+    <h5>Þú ert að fylgja þessum notanda</h5>
 }
 
 
 <div>
     @foreach (var post in Model.UserPosts)
     {
+        <div class="lists"> </div>
         <p>@post.DateAndTime</p>
 
         if (post.Image != null)

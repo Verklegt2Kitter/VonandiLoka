@@ -23,9 +23,20 @@ textarea {
     max-width: 280px;
 }
 
-p, pic{
-    font-style:italic;
+.lists {
+    
+    color:purple;
+    border-width:100px;
+    border-position: fixed;
     border-top: double;
+    
+    border-color:grey;
+
+}
+
+img{
+    font-style:italic;
+    
     border-color:grey;
     padding-top: 5pt;
     padding-bottom: 5pt;
@@ -40,7 +51,7 @@ body{
 img {
     max-width: 50%;
     height: auto;
-    padding-left: 5%;
+    
 }
 
 

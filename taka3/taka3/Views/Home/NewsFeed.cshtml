@@ -6,7 +6,7 @@
 <h2>Fréttaveita</h2>
 
 <div>
-    @Html.Partial("_AddPostPartial")
+    @Html.Partial("_AddPostPartial") <br />
 </div>
 
 <div>
@@ -14,10 +14,11 @@
         {
             foreach (var item in Model.AllUserPosts)
             {
+                <div class="lists"> </div>
                 @Html.ActionLink(@item.UserFirstName + " " + @item.UserLastName, "FriendProfilePage", 
                 new { userid = item.UserID })
 
-                <p>@item.DateAndTime</p>
+                <p class="time">@item.DateAndTime</p>
 
                 if (item.Image != null)
                 {
