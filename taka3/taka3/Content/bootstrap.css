@@ -218,7 +218,9 @@ textarea {
   overflow: auto;
   vertical-align: top;
 }
-
+.pull-left {
+  float: left !important;
+}
 table {
   border-collapse: collapse;
   border-spacing: 0;
