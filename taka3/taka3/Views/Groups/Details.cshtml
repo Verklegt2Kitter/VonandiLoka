@@ -6,7 +6,7 @@
 
 <h2>@Html.DisplayFor(model => model.GroupName)</h2>
 <!--Fanney, view fyrir hóp-->
-
+@Html.ActionLink("Bæta í hóp", "AddGroupMember", new {id = Model.GroupID})
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -19,9 +19,35 @@
     </dl>
 </div>
 <div>
-    @Html.Partial("_AddPostGroup")
+    @Html.Partial("_AddPostPartial")
 </div>
-@Html.ActionLink("Bæta í hóp", "AddGroupMember", new { })
+<!--Fréttaveita hóps, newsfeed fyrirmynd-->
+<div>
+    @if(Model != null)
+    { 
+       @**foreach (var item in Model.AllPostsByUserGroupId)
+        {
+            @Html.ActionLink(@intem.UserFirstName + " " +@item.UserLastName, "FriendProfile", new{ userid = item.UserID})
+            <p>@item.DateAndTime</p>
+        
+            if(item.Image != null)
+            {
+                <img src="~/Content/images/@item.ImageName" />
+            }
+            
+            if(item.PostBody != null)
+            {
+                <p>@item.PostBody</p>
+            }
+            
+            <div>@Html.ActionLink("Sjá og sýna athugasemdir", "PostComments", new {postid = item.ID } )</div>
+        }*@
+    }
+</div>
+
+<div>
+    @Html.Partial("_ToDoPartial")
+</div>
 
 <p>
     @Html.ActionLink("Breyta", "Edit", new { id = Model.GroupID }) |

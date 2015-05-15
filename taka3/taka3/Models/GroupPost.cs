@@ -14,7 +14,6 @@ namespace taka3.Models
 		public string Body { get; set; }
 		public DateTime DateAndTime { get; set; }
 		public string GroupName { get; set; }
-		public virtual ApplicationUser Author { get; set; }
 		public object UserName { get; set; }
 
         public GroupPost()

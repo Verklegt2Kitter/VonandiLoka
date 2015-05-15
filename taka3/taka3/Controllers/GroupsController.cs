@@ -144,17 +144,36 @@ namespace taka3.Controllers
             }
             base.Dispose(disposing);
         }
-        /*
+        
         [Authorize]
         [HttpPost]
-        public ActionResult AddFriend(FormCollection collection)
+        public ActionResult AddGroupMember(FormCollection collection)
         {
+            
             GroupUser newGroupUser = new GroupUser();
-            newGroupUser.GroupId = collection["GroupID"];
-            newGroupUser.UserId = collection["UserID"];
+            newGroupUser.GroupId = Convert.ToInt32(collection["GroupId"]);
+            newGroupUser.UserId = collection["UserId"];
             gService.AddGroupUser(newGroupUser);
-            return View();
-        }*/
+
+            return RedirectToAction("Details", new { id = newGroupUser.GroupId});  
+        }
+
+        [HttpGet]
+        public ActionResult AddGroupMember(string id)
+        {
+            AddFriendToGroupModelView model = new AddFriendToGroupModelView();
+
+            var followingService = new FollowingService(); //búa til tilvik
+            var userid = User.Identity.GetUserId();
+
+            ViewBag.GroupID = id;
+            
+          
+           var friendlist = followingService.MyFollowingList(userid);
+           model.GetAllFriends = friendlist;
+            
+            //return View(friendlist);
+            return View(model);
+        }
     }
-    
 }

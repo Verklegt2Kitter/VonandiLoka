@@ -12,7 +12,7 @@
 <div>
         @if(Model != null )
         {
-            foreach (var item in Model.AllUserPosts)
+            foreach (var item in Model.AllUserPosts)    
             {
                 @Html.ActionLink(@item.UserFirstName + " " + @item.UserLastName, "FriendProfilePage", 
                 new { userid = item.UserID })

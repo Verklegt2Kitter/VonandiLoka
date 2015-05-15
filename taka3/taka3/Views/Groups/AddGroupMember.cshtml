@@ -1,14 +1,35 @@
-﻿@model taka3.Models.GroupUser
+﻿@model taka3.Models.AddFriendToGroupModelView
+
 @{
     ViewBag.Title = "AddGroupMember";
 }
 
 <h2>Bæta við hópmeðlim</h2>
+<table class="table table-hover">
+    <caption>
+        <div>
+            <h3>Fylgjendur mínir</h3>
+        </div>
+    </caption>
+    <thead>
+        <tr>Nafn</tr>
+    </thead>
+    <!--Hér kemur listi af "vinum notandans" sem linka yfir í bæta í hóp-->
+    <tbody>
+        @foreach (var item in Model.GetAllFriends)
+        { 
+            <tr>
+                <td>
+                    @item.UserFirstName
+                    @using(Html.BeginForm("AddGroupMember", "Groups", FormMethod.Post))
+                    {
+                        @Html.Hidden("UserId", item.UserId)
+                        @Html.Hidden("GroupId", (string)ViewBag.GroupID)
+                        <input type="submit" value="Bæta í hóp" />
+                    }
+                </td>
+            </tr>
+            }
 
-@foreach (var item in friendModel)
-    <tr>
-        <td>
-            @Html.ActionLink(item.Name, "Edit", new { id = item.ID })
-        </td>
-    </tr>
-}
+        </tbody>
+    </table>

@@ -12,7 +12,7 @@ namespace taka3.Services
     {
         ApplicationDbContext m_db = new ApplicationDbContext();
 
-        //fanney/steindór fengu hjálp og til varð follow stuff
+        //fanney/steindór fengu hjálp og til varð follow 
         public List<FriendModel> GetAllFriendList()
         {
             return m_db.FriendModel.ToList();
@@ -32,15 +32,32 @@ namespace taka3.Services
             m_db.FriendModel.Add(followMe);
             m_db.SaveChanges();
         }
-        public List<FriendModel> MyFollowingList(string userId)
+        public List<FindFriendNameModelView> MyFollowingList(string userId)
         {
             var userService = new UserService();
 
-            var me = userService.GetThisUserById(userId);
-            var returnMe = (from l in GetAllFriendList()
-                            where l.User == me
-                            select l).ToList();
-            return returnMe;
+            var friends = GetAllFriendList();
+            var users = userService.GetAllUsers();
+
+            var friendList = new List<FindFriendNameModelView>();
+
+            foreach(var friend in friends)
+            {
+                if (friend.User.Id == userId)
+                {
+                    var user = users.Where(x => x.Id == friend.FollowingUserId).FirstOrDefault();
+                    if (user != null)
+                    {
+                        friendList.Add(new FindFriendNameModelView
+                        {
+                            UserFirstName = user.FirstName,
+                            UserId = user.Id
+                        });
+                    }
+                }
+            }
+
+            return friendList;
         }
         public FriendModel GetUserFriendInfoById(int id)
         {
@@ -55,12 +72,12 @@ namespace taka3.Services
         {
             var list = MyFollowingList(userId);
             var stopFollow = (from f in list
-                              where f.FollowingUserId == stopFollowId
+                              where f.UserId == stopFollowId
                               select f).SingleOrDefault();
 
-            var unfollow = GetUserFriendInfoById(stopFollow.Id);
+            var unfollow = GetUserFriendInfoById(stopFollowId);
 
-            m_db.FriendModel.Remove(unfollow);
+//            m_db.FriendModel.Remove(unfollow);
 
             m_db.SaveChanges();
         }
