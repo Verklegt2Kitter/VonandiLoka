@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 
 namespace taka3.Controllers
 {
+    
     public class GroupsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -24,7 +25,7 @@ namespace taka3.Controllers
             _groups = new GroupService();
         }
 
-        // GET: Groups
+        // GET: Groupst
         public ActionResult Index()
         {
             return View(_groups.AllGroups().ToList());
@@ -143,5 +144,17 @@ namespace taka3.Controllers
             }
             base.Dispose(disposing);
         }
+        /*
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddFriend(FormCollection collection)
+        {
+            GroupUser newGroupUser = new GroupUser();
+            newGroupUser.GroupId = collection["GroupID"];
+            newGroupUser.UserId = collection["UserID"];
+            gService.AddGroupUser(newGroupUser);
+            return View();
+        }*/
     }
+    
 }
