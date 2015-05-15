@@ -26,14 +26,4 @@ namespace taka3.Models
 		public string UserFirstName { get; set; }
 		public string UserLastName { get; set; } 
 	}
-
-	//Er þörf á þessu?	-Védís
-	public class CommentViewModel
-	{
-		public int ID { get; set; }
-		public string UserID { get; set; }
-		public string CommentBody { get; set; }
-		public DateTime DateAndTime { get; set; }
-		public int PostID { get; set; }
-	}
 }

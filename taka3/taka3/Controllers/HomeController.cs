@@ -69,7 +69,7 @@ namespace taka3.Controllers
 			IdentityManager manager = new IdentityManager();
 			var post = new UserPostService();
 
-			//model.AllUserPosts = post.GetAllUserPosts().ToList();
+			//Nær í 20 síðustu posta á síðunni og setur þá í lista með viðeigandi upplýsingum	-Védís
 			model.AllUserPosts = (from p in post.GetAllUserPosts()
 								  select new UserPostViewModel
 								  {
@@ -82,7 +82,7 @@ namespace taka3.Controllers
 									  ImageName = p.ImageName
 								  }).ToList();
 
-
+			//Fer í gegnum listann og finnur FirstName og LastName notandans sem postaði	-Védís
 			foreach (var item in model.AllUserPosts)
 			{
 				if(item != null)
@@ -96,6 +96,8 @@ namespace taka3.Controllers
 				}
 				
 			}
+
+			//skilar model listanum	-Védís
 			return View(model);
 		}
 
@@ -154,7 +156,7 @@ namespace taka3.Controllers
          //  string userNameToMatch
           // );
 
-		//Stjórnar Prófílsíðum annara notanda	-Védís
+		//Stjórnar Prófílsíðum annara notanda en þess sem er innskráður	-Védís
 	   public ActionResult FriendProfilePage(string userid)
 		{
 			ProfilePageViewModel model = new ProfilePageViewModel();
@@ -174,6 +176,58 @@ namespace taka3.Controllers
 
 			return View(model);
 		}
+		
+		public ActionResult PostComments(int postid)
+	   {
+			CommentViewModel model = new CommentViewModel();
+			IdentityManager manager = new IdentityManager();
+
+			var poster = new UserPostService();
+			var comment = new CommentService();
+			var post = new UserPostService();
+			var commenter = new CommentService();
+
+			var userid = poster.GetUserWhoPosted(postid);
+
+			//Rennir í gegnum öll commentin sem eru á þessu postid og límir á þau rétt info	-Védís
+			model.Comments = (from p in comment.GetAllCommentsForPost(postid)
+								  select new CommentViewModel
+								  {
+									  ID = p.ID,
+									  PostID = p.PostID,
+									  UserID = p.UserID,
+									  CommentBody = p.CommentBody,
+									  DateAndTime = p.DateAndTime
+								  }).ToList();
+
+			//Ná í myndina og bodyið ef það er ekki null
+
+				model.Image = post.GetImage(postid);
+
+				model.ImageName = post.GetImageName(postid);
+
+				model.PostBody = post.GetPostBody(postid);
+
+				model.PostID = postid;
+
+
+			//Finnur FirstName og LastName þess sem postaði commentinu	-Védís
+			foreach (var item in model.Comments)
+			{
+				if (item != null)
+				{
+					//var userIdTemp = poster.GetUserId(item.ID);
+					var userIdTemp = commenter.GetCommenterID(item.ID);
+					var userNameTemp = poster.GetUserNameById(userIdTemp);
+					var user = manager.GetUser(userNameTemp);
+
+					item.CommenterFirstName = user.FirstName;
+					item.CommenterLastName = user.LastName;
+				}
+			}
+
+			return View(model);
+	   }
 
     }
 }

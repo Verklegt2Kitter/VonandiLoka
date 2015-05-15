@@ -83,6 +83,37 @@ namespace taka3.Services
 						  select item.UserID).SingleOrDefault();
 			return result;
 		}
+
+		public string GetUserWhoPosted(int postid)
+		{
+			var result = (from item in m_db.UserPosts
+						  where item.ID == postid
+						  select item.UserID).SingleOrDefault();
+			return result;
+		}
+		public string GetImage(int postid)
+		{
+			var result = (from item in m_db.UserPosts
+						  where item.ID == postid
+						  select item.Image).SingleOrDefault();
+			return result;
+		}
+
+		public string GetImageName(int postid)
+		{
+			var result = (from item in m_db.UserPosts
+						  where item.ID == postid
+						  select item.ImageName).SingleOrDefault();
+			return result;
+		}
+
+		public string GetPostBody(int postid)
+		{
+			var result = (from item in m_db.UserPosts
+						  where item.ID == postid
+						  select item.PostBody).SingleOrDefault();
+			return result;
+		}
     
     }
 }
